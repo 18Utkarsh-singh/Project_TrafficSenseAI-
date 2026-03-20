@@ -21,7 +21,7 @@ if "prediction" not in st.session_state:
 # Generate all 96 time slots
 # -----------------------------
 
-TIMES = []
+#TIMES = []
 
 for hour in range(24):
     for minute in [0, 15, 30, 45]:
