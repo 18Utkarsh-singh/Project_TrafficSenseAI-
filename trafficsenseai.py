@@ -6,12 +6,11 @@ from streamlit_folium import st_folium
 st.set_page_config(page_title="TrafficSense AI", page_icon="🚦", layout="wide")
 
 # --- Load Model ---
-DIR = r"C:\Users\utkar\Downloads\Project_TrafficSenseAI--main.zip\Project_TrafficSenseAI--main\model"
-model = pickle.load(open(f"{DIR}\\traffic_classifier.sav", "rb"))
-te    = pickle.load(open(f"{DIR}\\time_encoder.sav", "rb"))
-de    = pickle.load(open(f"{DIR}\\day_encoder.sav", "rb"))
-tgt   = pickle.load(open(f"{DIR}\\target_encoder.sav", "rb"))
-df    = pd.read_excel(r"C:\Users\utkar\Downloads\traffic_sense_ai_dataset.xlsx", header=2)
+model = pickle.load(open("model/traffic_classifier.sav", "rb"))
+te    = pickle.load(open("model/time_encoder.sav", "rb"))
+de    = pickle.load(open("model/day_encoder.sav", "rb"))
+tgt   = pickle.load(open("model/target_encoder.sav", "rb"))
+df    = pd.read_excel("dataset/traffic_sense_ai_dataset.xlsx", header=2)
 df["Traffic Situation"] = df["Traffic Situation"].str.strip().str.lower()
 
 TIMES = [f"{h%12 or 12}:{m:02d}:00 {'AM' if h<12 else 'PM'}" for h in range(24) for m in [0,15,30,45]]
