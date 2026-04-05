@@ -6,7 +6,7 @@ from streamlit_folium import st_folium
 st.set_page_config(page_title="TrafficSense AI", page_icon="🚦", layout="wide")
 
 # --- Load Model ---
-DIR = r"C:\Users\utkar\Downloads\traffic_sense_ai_dataset.xlsx"
+DIR = r"C:\Users\utkar\Downloads\Project_TrafficSenseAI--main.zip\Project_TrafficSenseAI--main\model"
 model = pickle.load(open(f"{DIR}\\traffic_classifier.sav", "rb"))
 te    = pickle.load(open(f"{DIR}\\time_encoder.sav", "rb"))
 de    = pickle.load(open(f"{DIR}\\day_encoder.sav", "rb"))
