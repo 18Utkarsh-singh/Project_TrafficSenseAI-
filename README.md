@@ -9,7 +9,7 @@
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-ML-orange?style=for-the-badge&logo=scikit-learn)](https://scikit-learn.org)
 [![OpenStreetMap](https://img.shields.io/badge/OpenStreetMap-Mapping-green?style=for-the-badge&logo=openstreetmap)](https://openstreetmap.org)
 
-*Predict traffic congestion levels before you travel — using Random Forest classification, real-time route visualization, and an interactive web interface.*
+*Predict traffic congestion levels before you travel — using Random Forest classification, real-time route visualization, smart alerts, data charts, and an AI chatbot.*
 
 </div>
 
@@ -17,7 +17,7 @@
 
 ## 📖 Overview
 
-**TrafficSense AI** is an intelligent transportation system that uses a trained **Random Forest classifier** to predict urban traffic congestion levels based on vehicle counts, time of day, day of week, and date. The system provides an interactive **Streamlit** web interface and visualizes routes on **OpenStreetMap**, making it a practical demonstration of how machine learning can assist smart city mobility planning.
+**TrafficSense AI** is an intelligent transportation system that uses a trained **Random Forest classifier** to predict urban traffic congestion levels based on vehicle counts, time of day, day of week, and date. It features a **color-coded alert system**, **interactive data charts**, and a **TrafficBot chatbot** — all wrapped in a clean **Streamlit** web interface with live route visualization on **OpenStreetMap**.
 
 ---
 
@@ -25,38 +25,74 @@
 
 | Feature | Description |
 |---|---|
-| 🚗 **Traffic Prediction** | Predicts congestion level using a Random Forest classifier |
+| 🚗 **Traffic Prediction** | Predicts congestion using a Random Forest classifier |
+| 🚨 **Smart Alert System** | Color-coded alerts for Low / Medium / High / Very High traffic |
+| 🗺️ **Route Visualization** | Color-coded route displayed on interactive OpenStreetMap |
+| 📊 **Data Analytics** | 3 interactive Plotly charts from the training dataset |
+| 🤖 **TrafficBot** | Built-in chatbot for traffic tips and travel advice |
 | 🕒 **96 Time Slots** | Granular 15-minute interval support across the full day |
-| 📅 **Temporal Awareness** | Uses day of week and date for context-aware predictions |
 | 🚦 **Multi-Vehicle Input** | Accepts counts for cars, bikes, buses, and trucks |
-| 🗺️ **Route Visualization** | Displays routes interactively on OpenStreetMap via Folium |
-| 📍 **Geocoding Support** | Converts origin/destination addresses to coordinates |
-| 📊 **Interactive UI** | Clean, user-friendly Streamlit interface |
+
+---
+
+## 🚨 Alert System
+
+| Level | Color | Advice |
+|---|---|---|
+| 🟢 Low | Green | Roads are clear! Safe to travel. |
+| 🟡 Medium | Orange | Moderate congestion. Leave 10–15 min early. |
+| 🔴 High | Red | Heavy traffic! Consider an alternate route. |
+| 🚨 Very High | Dark Red | Severe congestion! Use Metro or reschedule. |
+
+---
+
+## 📊 Data Charts (Tab 2)
+
+- **Donut Chart** — Overall traffic distribution across the dataset
+- **Stacked Bar Chart** — Traffic levels broken down by day of the week
+- **Grouped Bar Chart** — Average vehicle counts per traffic level
+
+---
+
+## 🤖 TrafficBot (Tab 3)
+
+Ask the chatbot about:
+
+| Question | Type |
+|---|---|
+| `peak hours` | When is traffic heaviest? |
+| `best time` | When should I travel? |
+| `metro` | Should I use the Metro? |
+| `alternate` | What are alternate routes? |
+| `rain` | How does rain affect traffic? |
+| `weekend` | Is weekend traffic lighter? |
+| `current status` | What was my last prediction? |
 
 ---
 
 ## 🧠 Machine Learning Model
 
-### Algorithm: Random Forest Classifier
-
-Random Forest was selected for its strong performance on tabular/structured data, natural resistance to overfitting, and interpretability — making it well-suited for transportation prediction tasks.
+**Algorithm: Random Forest Classifier**
 
 ### Input Features
 
 | Feature | Type | Description |
 |---|---|---|
 | `Time` | Categorical | One of 96 time slots (every 15 minutes) |
-| `Date` | Numerical | Day of the month |
+| `Date` | Numerical | Day of the month (1–31) |
 | `Day` | Categorical | Day of the week (Mon–Sun) |
 | `Cars` | Numerical | Number of cars on road |
 | `Bikes` | Numerical | Number of bikes on road |
 | `Buses` | Numerical | Number of buses on road |
 | `Trucks` | Numerical | Number of trucks on road |
 
-### Output: Congestion Level
-```
-🟢 Low     🟡 Medium     🟠 High     🔴 Very High
-```
+### Dataset: 2,000 Records
+| Traffic Level | Count |
+|---|---|
+| 🟢 Low | 819 |
+| 🟡 Medium | 560 |
+| 🚨 Very High | 436 |
+| 🔴 High | 185 |
 
 ---
 
@@ -66,19 +102,24 @@ Random Forest was selected for its strong performance on tabular/structured data
 |---|---|
 | **Python** | Core programming language |
 | **Streamlit** | Interactive web UI |
-| **Scikit-learn** | Random Forest model training & inference |
-| **Folium** | Interactive map rendering |
+| **Scikit-learn** | Random Forest model |
+| **Folium + streamlit-folium** | Interactive map rendering |
+| **Plotly** | Data visualization charts |
 | **OpenStreetMap + OSRM** | Geocoding & route planning |
-| **NumPy** | Numerical computations |
+| **Pandas + NumPy** | Data processing |
 | **Pickle** | Model serialization |
+| **openpyxl** | Excel dataset reading |
 
 ---
 
 ## 📂 Project Structure
+
 ```
-TrafficSense-AI/
+Project_TrafficSenseAI/
 │
-├── traffic_app.py              # Main Streamlit application
+├── trafficsenseai.py           # Main Streamlit application (119 lines)
+├── requirements.txt            # Python dependencies
+├── README.md                   # Project documentation
 │
 ├── model/
 │   ├── traffic_classifier.sav  # Trained Random Forest model
@@ -87,7 +128,7 @@ TrafficSense-AI/
 │   └── target_encoder.sav      # Encoder for output labels
 │
 └── dataset/
-    └── traffic_dataset.csv     # Training dataset
+    └── traffic_sense_ai_dataset.xlsx   # Training dataset (2,000 records)
 ```
 
 ---
@@ -96,79 +137,77 @@ TrafficSense-AI/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/thenakulcode/Traffic_SenseAI_.git
-cd TrafficSense-AI
+git clone https://github.com/thenakulcode/Project_TrafficSenseAI-.git
+cd Project_TrafficSenseAI-
 ```
 
 ### 2. Install Dependencies
 ```bash
-pip install streamlit folium streamlit-folium scikit-learn numpy requests
+pip install -r requirements.txt
 ```
 
-> **Python 3.8+** is recommended.
-
----
-
-## ▶️ Running the Application
+### 3. Run the App
 ```bash
-streamlit run traffic_app.py
+streamlit run trafficsenseai.py
 ```
 
-The app will automatically open in your default browser at `http://localhost:8501`.
+The app opens at `http://localhost:8501`
 
 ---
 
 ## 🔄 How It Works
+
 ```
-User Input  →  Encoding  →  ML Prediction  →  Route Fetch  →  Map Display
+User Input → Encoding → ML Prediction → Alert → Route Fetch → Map Display
 ```
 
-1. **User provides inputs** — time slot, day, date, vehicle counts, and origin/destination
-2. **Data is encoded** using the pre-trained label encoders
+1. **User provides inputs** — origin, destination, time, day, date, vehicle counts
+2. **Data is encoded** using pre-trained label encoders
 3. **Random Forest model** predicts the traffic congestion level
-4. **OSRM API** retrieves the road route between origin and destination
-5. **Folium + OpenStreetMap** renders the route and prediction on an interactive map
+4. **Smart alert** displays color-coded warning with travel advice
+5. **OSRM API** retrieves the road route between origin and destination
+6. **Folium + OpenStreetMap** renders the color-coded route on an interactive map
 
 ---
 
 ## 🌍 Real-World Applications
 
-- 🏙️ **Smart City Traffic Monitoring** — Support urban traffic management centers
-- 🧭 **Route Planning & Navigation** — Help commuters choose optimal travel times
-- 📦 **Logistics & Delivery Optimization** — Reduce delays in last-mile delivery
-- 🏗️ **Urban Transportation Planning** — Inform infrastructure and policy decisions
-- 🚦 **Congestion Forecasting** — Predict peak-hour congestion before it occurs
+- 🏙️ **Smart City Traffic Monitoring**
+- 🧭 **Route Planning & Navigation**
+- 📦 **Logistics & Delivery Optimization**
+- 🚦 **Congestion Forecasting**
 
 ---
 
 ## 🚧 Limitations
 
 - Uses a **historical dataset** — not connected to live traffic feeds
-- Prediction accuracy is dependent on **dataset quality and coverage**
-- Does **not currently integrate** real-time traffic APIs (e.g., Google Maps, HERE)
+- Chatbot uses **keyword matching** — not a large language model
+- Route accuracy depends on **OSRM API availability**
 
 ---
 
 ## 🔮 Future Roadmap
 
-- [ ] 🔴 Integration with real-time traffic data APIs
-- [ ] 🤖 Deep learning models (LSTM, Transformer) for improved sequence prediction
-- [ ] 📱 Mobile application version
-- [ ] 📡 Real-time IoT vehicle sensor data integration
-- [ ] 🚦 Smart traffic signal prediction and optimization
-- [ ] 🌐 Multi-city dataset support
+- [ ] Real-time traffic data API integration
+- [ ] Deep learning models (LSTM) for sequence prediction
+- [ ] Mobile application version
+- [ ] Multi-city dataset support
+- [ ] AI-powered chatbot using LLM
 
 ---
 
 ## 👨‍💻 Author
 
-Developed as a machine learning project for **Intelligent Transportation Systems (ITS)**.  
-Built with ❤️ using Python, Scikit-learn, and Streamlit.
+**Nakul** — Developed as a machine learning project for Intelligent Transportation Systems.  
+Built with ❤️ using Python, Scikit-learn, Streamlit, and Plotly.
 
 ---
 
 <div align="center">
 
 ⭐ If you found this project useful, please consider giving it a star!
+
+**🚀 [Live Demo](https://share.streamlit.io) | 📁 [GitHub](https://github.com/thenakulcode/Project_TrafficSenseAI-)**
 
 </div>
