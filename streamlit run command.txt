@@ -1,4 +1,0 @@
-streamlit run "C:\Users\nakul\OneDrive\Desktop\trafficpredictor\trafficsenseai.py" for Anaconda
-or
-python -m streamlit run trafficsenseai.py
-pip install streamlit folium streamlit-folium scikit-learn numpy requests
